@@ -32,10 +32,14 @@ const StatCard = ({ title, count, icon, loading, error }) => {
         alignItems: 'center',
         borderRadius: 2,
         height: '100%',
-        transition: 'transform 0.2s',
+        transition: 'all 0.3s ease',
         '&:hover': {
           transform: 'translateY(-4px)',
+          boxShadow: 6,
         },
+        minHeight: 200,
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
       <Box
@@ -49,11 +53,20 @@ const StatCard = ({ title, count, icon, loading, error }) => {
           bgcolor: 'primary.light',
           color: 'primary.main',
           mb: 2,
+          transition: 'all 0.3s ease',
         }}
       >
         {icon}
       </Box>
-      <Typography variant="h6" color="text.secondary" gutterBottom>
+      <Typography 
+        variant="h6" 
+        color="text.secondary" 
+        gutterBottom
+        sx={{
+          textAlign: 'center',
+          transition: 'all 0.3s ease',
+        }}
+      >
         {title}
       </Typography>
       {loading ? (
@@ -61,7 +74,14 @@ const StatCard = ({ title, count, icon, loading, error }) => {
       ) : error ? (
         <Typography color="error">Error</Typography>
       ) : (
-        <Typography variant="h4" color="primary" fontWeight="bold">
+        <Typography 
+          variant="h4" 
+          color="primary" 
+          fontWeight="bold"
+          sx={{
+            transition: 'all 0.3s ease',
+          }}
+        >
           {count}
         </Typography>
       )}
@@ -241,8 +261,24 @@ const Dashboard = () => {
       )}
 
       {/* Stat Cards Grid */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid sx={{ width: { xs: '100%', sm: '50%', md: '25%' } }}>
+      <Grid 
+        container 
+        spacing={3} 
+        sx={{ 
+          mb: 4,
+          transition: 'all 0.3s ease',
+          width: '100%',
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: '1fr',
+            sm: 'repeat(2, 1fr)',
+            md: 'repeat(3, 1fr)',
+            lg: 'repeat(4, 1fr)'
+          },
+          gap: 3
+        }}
+      >
+        <Grid item xs={12} sm={6} md={4} lg={3}>
           <StatCard
             title="Locations"
             count={locationsData?.length || 0}
@@ -251,7 +287,7 @@ const Dashboard = () => {
             error={locationsError}
           />
         </Grid>
-        <Grid sx={{ width: { xs: '100%', sm: '50%', md: '25%' } }}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
           <StatCard
             title="Bins"
             count={binsData?.length || 0}
@@ -260,7 +296,7 @@ const Dashboard = () => {
             error={binsError}
           />
         </Grid>
-        <Grid sx={{ width: { xs: '100%', sm: '50%', md: '25%' } }}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
           <StatCard
             title="Users"
             count={usersData?.length || 0}
@@ -269,7 +305,7 @@ const Dashboard = () => {
             error={usersError}
           />
         </Grid>
-        <Grid sx={{ width: { xs: '100%', sm: '50%', md: '25%' } }}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
           <StatCard
             title="Inventory Items"
             count={inventoryData?.length || 0}
@@ -278,7 +314,7 @@ const Dashboard = () => {
             error={inventoryError}
           />
         </Grid>
-        <Grid sx={{ width: { xs: '100%', sm: '50%', md: '25%' } }}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
           <StatCard
             title="Items"
             count={itemsData ? Object.keys(itemsData).length : 0}
@@ -287,7 +323,7 @@ const Dashboard = () => {
             error={itemsError}
           />
         </Grid>
-        <Grid sx={{ width: { xs: '100%', sm: '50%', md: '25%' } }}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
           <StatCard
             title="Sales Orders"
             count={salesOrdersData?.length || 0}
@@ -296,7 +332,7 @@ const Dashboard = () => {
             error={salesOrdersError}
           />
         </Grid>
-        <Grid sx={{ width: { xs: '100%', sm: '50%', md: '25%' } }}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
           <StatCard
             title="Bin Count Records"
             count={binCountRecordsData?.length || 0}
@@ -305,7 +341,7 @@ const Dashboard = () => {
             error={binCountRecordsError}
           />
         </Grid>
-        <Grid sx={{ width: { xs: '100%', sm: '50%', md: '25%' } }}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
           <StatCard
             title="WMS AI Users"
             count={wmsAiUsersData?.length || 0}

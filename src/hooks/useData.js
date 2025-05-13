@@ -41,8 +41,11 @@ export const useData = (endpoint) => {
         throw error;
       }
     },
-    staleTime: 10 * 60 * 1000, // 10 minutes
-    cacheTime: 10 * 60 * 1000, // 10 minutes
-    refetchInterval: 5 * 60 * 1000, // 5 minutes
+    staleTime: 5 * 60 * 1000, // 5 minutes - data becomes stale after 5 minutes
+    cacheTime: 10 * 60 * 1000, // 10 minutes - cache is kept for 10 minutes
+    refetchInterval: 4.5 * 60 * 1000, // 4.5 minutes - refetch 30 seconds before data becomes stale
+    refetchOnWindowFocus: true, // Refetch when window regains focus
+    refetchOnMount: true, // Refetch when component mounts
+    refetchOnReconnect: true, // Refetch when network reconnects
   });
 }; 
