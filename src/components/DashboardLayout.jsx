@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
@@ -49,6 +49,7 @@ const DashboardLayout = ({ children }) => {
   const { logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const mainContentRef = useRef(null);
 
   const handleDrawerToggle = () => {
     setDrawerOpen((prev) => !prev);
@@ -59,8 +60,15 @@ const DashboardLayout = ({ children }) => {
     setDrawerOpen(true);
   };
 
+  // Focus management for accessibility
+  useEffect(() => {
+    if (!drawerOpen && mainContentRef.current) {
+      mainContentRef.current.focus();
+    }
+  }, [drawerOpen]);
+
   const drawer = (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div role="navigation" aria-label="Main navigation">
       <Toolbar />
       <List sx={{ flexGrow: 1 }}>
         {menuItems.map((item) => (
@@ -133,10 +141,6 @@ const DashboardLayout = ({ children }) => {
             onClick={handleDrawerToggle}
             sx={{ 
               mr: 2,
-              outline: 'none',
-              '&:focus': {
-                outline: 'none'
-              },
               color: 'common.white',
             }}
           >
@@ -157,6 +161,7 @@ const DashboardLayout = ({ children }) => {
           onClose={handleDrawerToggle}
           ModalProps={{
             keepMounted: true,
+            disableEnforceFocus: true,
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
@@ -186,6 +191,8 @@ const DashboardLayout = ({ children }) => {
       </Box>
       <Box
         component="main"
+        ref={mainContentRef}
+        tabIndex={-1}
         sx={{
           flexGrow: 1,
           p: 3,
